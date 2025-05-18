@@ -1,8 +1,8 @@
 
 import UserModel from "../models/user_model.js";
 import PostModel from "../models/post_model.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+// import bcrypt from "bcrypt";
+// import jwt from "jsonwebtoken";
 import sendOTPEmail from "../utils/otp_util.js";
 
 

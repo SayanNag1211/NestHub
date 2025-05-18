@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 uploadFormData.append('images', files[i]); // backend must handle "images" as array
             }
 
-            const uploadResponse = await fetch('http://localhost:3003/api/v1/upload-images', {
+            const uploadResponse = await fetch('https://nesthub-e20x.onrender.com/api/v1/upload-images', {
                 method: 'POST',
                 body: uploadFormData
             });
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Payload:', postData);
             
             // Send to final API
-            const submitResponse = await fetch(`http://localhost:3003/api/v1/post-data/${localStorage.getItem("id")}`, {
+            const submitResponse = await fetch(`https://nesthub-e20x.onrender.com/api/v1/post-data/${localStorage.getItem("id")}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function fetchProfileData() {
     try {
       // Replace with your actual API endpoint
-      const response = await fetch(`http://localhost:3003/api/v1/get-my-posts/${localStorage.getItem("id")}`);
+      const response = await fetch(`https://nesthub-e20x.onrender.com/api/v1/get-my-posts/${localStorage.getItem("id")}`);
         if (!response.ok) {    
         throw new Error('Network response was not ok');
         }

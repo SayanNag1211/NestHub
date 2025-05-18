@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
        
     
    async function fetchProperties(latitude, longitude) {
-    const apiUrl = `http://localhost:3003/api/v1/get-nearby-posts?latitude=${latitude}&longitude=${longitude}`;
+    const apiUrl = `https://nesthub-e20x.onrender.com/api/v1/get-nearby-posts?latitude=${latitude}&longitude=${longitude}`;
         fetch(apiUrl)
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');
@@ -316,7 +316,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function fetchProperties(wantTo, pinCode, location) {
-        let apiUrl = `http://localhost:3003/api/v1/get-post-by-pincode/${pinCode}`;
+        let apiUrl = `https://nesthub-e20x.onrender.com/api/v1/get-post-by-pincode/${pinCode}`;
         
         // if (pinCode) apiUrl += `&pincode=${pinCode}`;
         // if (location) apiUrl += `&location=${encodeURIComponent(location)}`;

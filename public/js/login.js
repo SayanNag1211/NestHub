@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        fetch("http://localhost:3003/api/v1/send-otp", {
+        fetch("https://nesthub-e20x.onrender.com/api/v1/send-otp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email }),
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         toggleLoading(true);
 
-        fetch("http://localhost:3003/api/v1/create-user", {
+        fetch("https://nesthub-e20x.onrender.com/api/v1/create-user", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, otp }),

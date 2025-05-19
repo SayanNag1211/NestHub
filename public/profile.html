@@ -8,6 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary-color: #4361ee;
@@ -15,12 +16,52 @@
       --accent-color: #4cc9f0;
       --success-color: #2ecc71;
       --danger-color: #e74c3c;
+      --primary-100: #2179FF;
+      --primary-90: #1E6DE5;
+      --primary-80: #1B61CC;
+      --gray-100: #F8F9FA;
+      --gray-200: #E9ECEF;
+      --gray-300: #DEE2E6;
+      --gray-700: #495057;
+      --gray-900: #212529;
+      --nav-bg: #0D3166;
     }
     
     
     body {
       background-color: #f8f9fa;
       padding-top: 2rem;
+    }
+
+
+    .navbar {
+    background-color: var(--nav-bg);
+    box-shadow: 0 4px 12px rgba(13, 49, 102, 0.15);
+    padding: 1.25rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    }
+
+
+    .back-button {
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: transparent;
+        padding: 0.625rem 1.25rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+    }
+
+    .back-button:hover {
+        color: white;
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateX(-2px);
     }
     
     .property-card {
@@ -202,6 +243,15 @@
 
 </head>
 <body>
+
+  <nav class="navbar navbar-expand-lg">
+      <div class="container">
+          <button class="btn back-button" onclick="history.back()">
+              <i class="fas fa-arrow-left"></i>
+              <span>Back</span>
+          </button>           
+      </div>
+    </nav>
 
   <div class="container">
 

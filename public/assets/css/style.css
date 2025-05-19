@@ -1195,3 +1195,73 @@
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+
+
+.image-slider-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.image-slider-modal.show {
+  display: flex;
+}
+
+.slider-wrapper {
+  position: relative;
+  max-width: 90vw;
+  max-height: 80vh;
+}
+
+.slider-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.slider-controls {
+  margin-top: 15px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.slider-controls button {
+  background-color: white;
+  color: black;
+  border: none;
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 32px;
+  color: white;
+  cursor: pointer;
+}
+/* Default (Desktop): white icon */
+.logout-btn {
+  background: none;
+  border: none;
+  color: white;
+}
+
+/* Mobile (screen width <= 768px): black icon */
+@media only screen and (max-width: 768px) {
+  .logout-btn {
+    color: black;
+  }
+}

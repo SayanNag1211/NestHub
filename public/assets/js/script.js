@@ -103,50 +103,39 @@ document.addEventListener('DOMContentLoaded', function() {
         // 'https://wa.me/$phoneNumber?text=${Uri.encodeComponent(message)}';
 
         card.innerHTML = `
-            <div class="card-banner">
-                <figure class="img-holder" style="--width: 585; --height: 390;">
-                    <img src="${
-                      property.image?.[0] ||
-                      "assets/images/default-property.jpg"
-                    }" 
-                         width="585" height="390" 
-                         alt="${property.title || "Property"}" 
-                         class="img-cover">
-                </figure>
+                <div class="card-banner">
+                    <figure class="img-holder" style="--width: 585; --height: 390;" 
+                            data-images='${JSON.stringify(property.image || [])}' 
+                            onclick="handleImageClick(this)">
+                    <img src="${property.image?.[0] || "assets/images/default-property.jpg"}"
+                        width="585" height="390"
+                        alt="${property.title || "Property"}"
+                        class="img-cover">
+                    </figure>
+
+                 
                 
                 ${
                   property.isNew
                     ? '<span class="badge label-medium">New</span>'
                     : ""
                 }
-                
-                <div class="card-actions">
-                    <button class="icon-btn fav-btn" aria-label="Add to favorites">
-                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
-                    </button>
-                    ${
-                      property.tier
-                        ? `<span class="badge tier-${property.tier}">Tier ${property.tier}</span>`
-                        : ""
-                    }
-                </div>
+            
             </div>
             
             <div class="card-content">
             <div class="card-meta" style="display: flex; justify-content: space-between; align-items: center;"> 
-               <span class="title-large">$${displayPrice.toLocaleString()}</span>
+               <span class="title-large">₹${displayPrice.toLocaleString()}</span>
                   <a href="${whatsappLink}" class="btn whatsapp-btn" target="_blank">
                         <img src="assets/images/wt.png" alt="WhatsApp" width="20">
                     </a>
             </div>
              
                 
-                <h3>
-                    <a href="/properties/${
-                      property._id || "#"
-                    }" class="title-small card-title">
+                <h3 class="title-small card-title">
+                   
                         ${property.title || "Property Title"}
-                    </a>
+                    
                 </h3>
                 
                 <address class="body-medium card-text">
@@ -157,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="meta-item">
                         <span class="material-symbols-rounded meta-icon" aria-hidden="true">bed</span>
                         <span class="meta-text label-medium">${
-                          property.bedrooms || "0"
+                          property.rooms || "0"
                         } Bed</span>
                     </div>
                     
@@ -171,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="meta-item">
                         <span class="material-symbols-rounded meta-icon" aria-hidden="true">straighten</span>
                         <span class="meta-text label-medium">${
-                          property.area || "0"
+                          property.size || "0"
                         } sqft</span>
                     </div>
                 </div>
@@ -265,6 +254,10 @@ document.addEventListener("DOMContentLoaded", function () {
     logoutBtn.addEventListener("click", function () {
       localStorage.removeItem("login");
       localStorage.removeItem("email");
+
+      localStorage.clear();
+      sessionStorage.clear();
+      location.reload();
       showLoggedOutUI();
     });
   });
@@ -354,28 +347,25 @@ document.addEventListener("DOMContentLoaded", function () {
         const displayPrice = property.adjustedPrice || property.price || '0.00';
         
         card.innerHTML = `
-            <div class="card-banner">
-                <figure class="img-holder" style="--width: 585; --height: 390;">
-                    <img src="${property.image?.[0] || 'assets/images/default-property.jpg'}" 
-                         width="585" height="390" 
-                         alt="${property.title || 'Property image'}" 
-                         class="img-cover">
-                </figure>
+        <div class="card-banner">
+                    <figure class="img-holder" style="--width: 585; --height: 390;" 
+                            data-images='${JSON.stringify(property.image || [])}' 
+                            onclick="handleImageClick(this)">
+                    <img src="${property.image?.[0] || "assets/images/default-property.jpg"}"
+                        width="585" height="390"
+                        alt="${property.title || "Property"}"
+                        class="img-cover">
+                    </figure>
                 
                 ${property.isNew ? '<span class="badge label-medium">New</span>' : ''}
                 
                 <div class="card-actions">
-                    <button class="icon-btn fav-btn" aria-label="Add to favorites">
-                        <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
-                    </button>
-                    
+                 
                     <div class="contact-buttons">
                         <button class="icon-btn whatsapp-btn" aria-label="Contact via WhatsApp">
-                            <img src="assets/images/whatsapp-icon.svg" alt="WhatsApp" width="20">
+                            <img src="assets/images/wt.png" alt="WhatsApp" width="20">
                         </button>
-                        <button class="icon-btn call-btn" aria-label="Call agent">
-                            <span class="material-symbols-rounded" aria-hidden="true">call</span>
-                        </button>
+                      
                     </div>
                 </div>
                 
@@ -383,7 +373,9 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
             
             <div class="card-content">
-                <span class="title-large">$${displayPrice.toLocaleString()}</span>
+
+                
+                <span class="title-large">₹${displayPrice.toLocaleString()}</span>
                 
                 <h3>
                     <a href="/properties/${property._id || '#'}" class="title-small card-title">
@@ -398,7 +390,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="card-meta-list">
                     <div class="meta-item">
                         <span class="material-symbols-rounded meta-icon" aria-hidden="true">bed</span>
-                        <span class="meta-text label-medium">${property.bedrooms || '0'} Bed</span>
+                        <span class="meta-text label-medium">${property.rooms || '0'} Bed</span>
                     </div>
                     
                     <div class="meta-item">
@@ -408,7 +400,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     
                     <div class="meta-item">
                         <span class="material-symbols-rounded meta-icon" aria-hidden="true">straighten</span>
-                        <span class="meta-text label-medium">${property.area || '0'} sqft</span>
+                        <span class="meta-text label-medium">${property.size || '0'} sqft</span>
                     </div>
                 </div>
             </div>

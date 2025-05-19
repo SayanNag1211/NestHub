@@ -238,8 +238,11 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderProfileCards(profiles) {
     const propertyList = document.getElementById('property-list');
     propertyList.innerHTML = '';
-
+ 
+    
     profiles.forEach((property, index) => {
+    console.log(property.rooms);
+    console.log(property.size);
       const propertyCard = document.createElement('div');
       propertyCard.className = 'col-md-6 col-lg-4';
       propertyCard.innerHTML = `
@@ -253,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </span>
           </div>
           <div class="card-body">
-            <div class="property-price">$${property.price.toLocaleString()}</div>
+            <div class="property-price">₹${property.price.toLocaleString()}</div>
             <h5 class="property-title">${property.title}</h5>
             <p class="property-location">
               <i class="fas fa-map-marker-alt me-1"></i>

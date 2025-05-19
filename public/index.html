@@ -25,7 +25,7 @@
 <body>
     <header class="header" data-header>
         <div class="container">
-            <a href="#" class="logo">                                        <!--change-->
+            <a href="#" class="logo">                                        
                 <img src="assets/images/logo.png" width="145" height="20" alt="NestHub"><!--change-->
             </a>
             <nav class="navbar" data-navbar>
@@ -53,10 +53,9 @@
                     <a href="login.html" class="btn-link label-medium" id="loginBtn">LogIn</a>
                     <a href="#" class="btn btn-fill label-medium" id="getStartedBtn">Get Started</a>
                   
-                    <!-- Logout Icon Button -->
-                    <button id="logoutBtn" style="display: none; background: none; border: none; color: white;" title="Logout">
-                      <i class="fas fa-sign-out-alt"></i>
-                    </button>
+                <button id="logoutBtn" class="logout-btn" title="Logout">
+                     <i class="fas fa-sign-out-alt"></i>
+                </button>
                 </div>
             </nav>
 
@@ -152,6 +151,7 @@
             </section>
             <div class="property-list grid-layout" id="filter-property-list">
                 <!-- Cards will be inserted here by JavaScript -->
+                 
             </div>
             <!-- Property Section -->
             <section class="section property" id="rent" area-labelledby="Property-label">
@@ -1031,10 +1031,59 @@
 
             </div>
         </div>
-
+        
     </footer>
 
 <script type="text/javascript" src="js/vanila.js"></script>
 <script src="assets/js/script.js"></script>
+
+<div id="imageSliderModal" class="image-slider-modal">
+  <span class="close-btn" onclick="closeImageSlider()">&times;</span>
+  <div class="slider-wrapper">
+    <img id="sliderImage" src="" alt="Property Image">
+    <div class="slider-controls">
+      <button onclick="prevImage()">&#10094;</button>
+      <button onclick="nextImage()">&#10095;</button>
+    </div>
+  </div>
+</div>
+<script>
+  let currentIndex = 0;
+  let sliderImages = [];
+
+  function handleImageClick(elem) {
+    const imagesJson = elem.getAttribute("data-images");
+    if (!imagesJson) return;
+
+    try {
+      const images = JSON.parse(imagesJson);
+      if (images.length > 0) {
+        sliderImages = images;
+        currentIndex = 0;
+        document.getElementById("sliderImage").src = sliderImages[currentIndex];
+        document.getElementById("imageSliderModal").classList.add("show");
+      }
+    } catch (e) {
+      console.error("Invalid image data", e);
+    }
+  }
+
+  function closeImageSlider() {
+    document.getElementById("imageSliderModal").classList.remove("show");
+  }
+
+  function prevImage() {
+    if (!sliderImages.length) return;
+    currentIndex = (currentIndex - 1 + sliderImages.length) % sliderImages.length;
+    document.getElementById("sliderImage").src = sliderImages[currentIndex];
+  }
+
+  function nextImage() {
+    if (!sliderImages.length) return;
+    currentIndex = (currentIndex + 1) % sliderImages.length;
+    document.getElementById("sliderImage").src = sliderImages[currentIndex];
+  }
+</script>
+
 </body>
 </html>

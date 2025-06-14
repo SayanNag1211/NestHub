@@ -305,7 +305,12 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
         
         // Call API with search parameters
-        fetchProperties(wantTo, pinCode, location);
+        
+        if (location.trim() === '') {
+            fetchProperties(wantTo, pinCode, location);
+        } else {
+            fetchPropertiesByAdd(wantTo, location, pinCode);
+        }
     });
 
     function fetchProperties(wantTo, pinCode, location) {
@@ -338,6 +343,39 @@ document.addEventListener("DOMContentLoaded", function () {
                 showErrorState();
             });
     }
+
+    function fetchPropertiesByAdd(wantTo, Add, location) {
+        let apiUrl = `https://nesthub-e20x.onrender.com/api/v1/get-post-by-add/${Add}`;
+        
+        // if (pinCode) apiUrl += `&pincode=${pinCode}`;
+        // if (location) apiUrl += `&location=${encodeURIComponent(location)}`;
+        
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                propertyList.innerHTML = '';
+                
+                const allProperties = data;
+                
+                if (allProperties.length > 0) {
+                    allProperties.forEach(property => {
+                        const card = createPropertyCard(property);
+                        propertyList.appendChild(card);
+                    });
+                } else {
+                    showNoResults();
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching properties:', error);
+                showErrorState();
+            });
+    }
+
+
 
     function createPropertyCard(property) {
         const card = document.createElement('div');

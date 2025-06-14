@@ -19,13 +19,15 @@ export const getNearbyPosts = async (req, res) => {
         postsWithDistance.sort((a, b) => a.distance - b.distance);
         
         // Price boost tiers
+        // const priceTiers = [
+        //     { boost: 0.10, label: "10%" }, 
+        //     { boost: 0.08, label: "8%" },   
+        //     { boost: 0.07, label: "7%" },  
+        //     { boost: 0.05, label: "5%" },   
+        //     { boost: 0.02, label: "2%" }   
+        // ];
         const priceTiers = [
-            { boost: 0.10, label: "10%" }, 
-            { boost: 0.08, label: "8%" },   
-            { boost: 0.07, label: "7%" },  
-            { boost: 0.05, label: "5%" },   
-            { boost: 0.02, label: "2%" }   
-        ];
+                { boost: 0.10, label: "0%" },];
         
         // Apply price boosts
         const result = postsWithDistance.map((post, index) => {
@@ -114,3 +116,29 @@ export const getPostByPincode = async (req, res) => {
           });
         }
       }     
+
+
+      export const getPostByAddress = async (req, res) => {
+        try {
+          const keyword = req.params.keyword;
+      
+          // Case-insensitive search in the 'address' field
+          const posts = await PostModel.find({
+            address: { $regex: keyword, $options: 'i' },
+          });
+      
+          if (posts.length === 0) {
+            return res.status(404).json({
+              message: 'No posts found for the given address keyword',
+            });
+          }
+      
+          res.json(posts);
+        } catch (error) {
+          console.error('Error searching by address:', error);
+          res.status(500).json({
+            error: 'An error occurred while searching by address',
+          });
+        }
+      };
+      

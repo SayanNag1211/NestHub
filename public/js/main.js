@@ -205,6 +205,138 @@ document.addEventListener('DOMContentLoaded', function () {
             submitBtn.disabled = false;
         }
     });
+
+    // Price suggestion functionality
+    function calculateSuggestedPrices(size, rooms, bathrooms) {
+        // Base price per sq ft
+        const basePricePerSqFt = 50;
+        
+        // Room and bathroom multipliers
+        const roomMultiplier = 1.1;
+        const bathroomMultiplier = 1.05;
+        
+        // Calculate base price
+        let basePrice = size * basePricePerSqFt;
+        
+        // Apply multipliers for rooms and bathrooms
+        basePrice *= Math.pow(roomMultiplier, rooms);
+        basePrice *= Math.pow(bathroomMultiplier, bathrooms);
+        
+        // Calculate three price ranges
+        const lowPrice = Math.round(basePrice * 0.9 / 1000) * 1000;
+        const midPrice = Math.round(basePrice / 1000) * 1000;
+        const highPrice = Math.round(basePrice * 1.1 / 1000) * 1000;
+        
+        return {
+            low: lowPrice,
+            mid: midPrice,
+            high: highPrice
+        };
+    }
+
+    function updatePriceSuggestions() {
+        const size = parseInt(document.getElementById('size').value) || 0;
+        const rooms = parseInt(document.getElementById('rooms').value) || 0;
+        const bathrooms = parseInt(document.getElementById('bathrooms').value) || 0;
+        
+        if (size > 0 && rooms > 0 && bathrooms > 0) {
+            const prices = calculateSuggestedPrices(size, rooms, bathrooms);
+            
+            // Create or update price suggestion buttons
+            let priceSuggestions = document.getElementById('priceSuggestions');
+            if (!priceSuggestions) {
+                priceSuggestions = document.createElement('div');
+                priceSuggestions.id = 'priceSuggestions';
+                priceSuggestions.className = 'price-suggestions mt-2';
+                document.getElementById('price').parentNode.appendChild(priceSuggestions);
+            }
+            
+            priceSuggestions.innerHTML = `
+                <div class="price-range-label mb-2">Select a price range:</div>
+                <div class="btn-group w-100" role="group">
+                    <button type="button" class="btn btn-outline-primary price-btn" onclick="setPrice(${prices.low})">
+                        <div class="price-label">Economy</div>
+                        <div class="price-value">₹${prices.low.toLocaleString()}</div>
+                    </button>
+                    <button type="button" class="btn btn-outline-primary price-btn" onclick="setPrice(${prices.mid})">
+                        <div class="price-label">Standard</div>
+                        <div class="price-value">₹${prices.mid.toLocaleString()}</div>
+                    </button>
+                    <button type="button" class="btn btn-outline-primary price-btn" onclick="setPrice(${prices.high})">
+                        <div class="price-label">Premium</div>
+                        <div class="price-value">₹${prices.high.toLocaleString()}</div>
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    // Add to window object so it can be called from onclick
+    window.setPrice = function(price) {
+        const priceInput = document.getElementById('price');
+        priceInput.value = price;
+        // Remove active class from all buttons
+        document.querySelectorAll('.price-btn').forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        event.target.closest('.price-btn').classList.add('active');
+    };
+
+    // Add event listeners for size, rooms, and bathrooms inputs
+    ['size', 'rooms', 'bathrooms'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updatePriceSuggestions);
+    });
+
+    // Add CSS for price suggestions
+    const style = document.createElement('style');
+    style.textContent = `
+        .price-suggestions {
+            margin-top: 0.5rem;
+        }
+        .price-suggestions .btn-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .price-suggestions .btn {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .price-suggestions .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .price-suggestions .btn.active {
+            background-color: #0d6efd;
+            color: white;
+        }
+        .price-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        .price-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .price-range-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        #price {
+            background-color: #f8f9fa;
+            cursor: not-allowed;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Make price input read-only
+    document.getElementById('price').readOnly = true;
 });
 
 

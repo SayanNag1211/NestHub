@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { UserController } from "../controllers/main_controller.js";
-import {getNearbyPosts,getPostByPincode} from "../controllers/ranking_controller.js";
+import {getNearbyPosts,getPostByPincode,getPostByAddress} from "../controllers/ranking_controller.js";
 import {uploadImages, handleImageUpload} from "../controllers/upload_imges_controller.js";
 
 const router = Router();
@@ -17,5 +17,9 @@ router.post("/api/v1/toggle-post-status/:id", UserController.togglePostStatus);
 router.get("/api/v1/get-my-posts/:userId", UserController.getMyPosts);
 //getPostByPincode
 router.get("/api/v1/get-post-by-pincode/:pincode", getPostByPincode);
+
+router.get("/api/v1/get-post-by-add/:keyword", getPostByAddress);
+
+
 
 export default router;

@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Price suggestion functionality
     function calculateSuggestedPrices(size, rooms, bathrooms) {
         // Base price per sq ft
-        const basePricePerSqFt = 50;
+        const basePricePerSqFt = 10;
         
         // Room and bathroom multipliers
         const roomMultiplier = 1.1;
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Calculate three price ranges
         const lowPrice = Math.round(basePrice * 0.9 / 1000) * 1000;
         const midPrice = Math.round(basePrice / 1000) * 1000;
-        const highPrice = Math.round(basePrice * 1.1 / 1000) * 1000;
+        const highPrice = Math.round(basePrice * 1.3 / 1000) * 1000;
         
         return {
             low: lowPrice,
@@ -330,13 +330,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         #price {
             background-color: #f8f9fa;
-            cursor: not-allowed;
         }
     `;
     document.head.appendChild(style);
-
-    // Make price input read-only
-    document.getElementById('price').readOnly = true;
 });
 
 

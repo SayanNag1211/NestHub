@@ -95,12 +95,14 @@ export const getNearbyPosts = async (req, res) => {
 
 export const getPostByPincode = async (req, res) => {
 
-
         try {
           const pincode = req.params.pincode;
           
           // Search for posts with matching postalCode
-          const posts = await PostModel.find({ postalCode: pincode });
+          const posts = await PostModel.find({
+            postalCode: pincode,
+            status: "live",
+          });
           
           if (posts.length === 0) {
             return res.status(404).json({ 
@@ -122,23 +124,24 @@ export const getPostByPincode = async (req, res) => {
         try {
           const keyword = req.params.keyword;
       
-          // Case-insensitive search in the 'address' field
           const posts = await PostModel.find({
             address: { $regex: keyword, $options: 'i' },
+            status: "live", 
           });
       
           if (posts.length === 0) {
             return res.status(404).json({
-              message: 'No posts found for the given address keyword',
+              message: 'No live posts found for the given address keyword',
             });
           }
       
           res.json(posts);
         } catch (error) {
-          console.error('Error searching by address:', error);
+          console.error('Error searching live posts by address:', error);
           res.status(500).json({
-            error: 'An error occurred while searching by address',
+            error: 'An error occurred while searching live posts by address',
           });
         }
       };
+      
       

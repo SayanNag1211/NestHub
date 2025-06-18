@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
         card.className = 'card';
         const displayPrice = property.adjustedPrice || property.price || '0.00';
         const phoneNumber = property.phone || defaultPhone;
-        const whatsappLink = `https://wa.me/${phoneNumber}?text=Hi, I'm interested in ${encodeURIComponent(property.title || 'this property')}`;
+        const whatsappLink = `https://wa.me/${phoneNumber}?text=Hi, I'm interested in ${encodeURIComponent(property.title || 'this property')} (${window.location.href})`;
         // 'https://wa.me/$phoneNumber?text=${Uri.encodeComponent(message)}';
 
         card.innerHTML = `
@@ -446,7 +446,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
         // Add click events to buttons
         card.querySelector('.whatsapp-btn')?.addEventListener('click', () => {
-            const message = `Hi, I'm interested in ${property.title || 'this property'}`;
+            const message = `Hi, I'm interested in ${property.title || 'this property'} (${window.location.href})`;
             window.open(`https://wa.me/${property.phone}?text=${encodeURIComponent(message)}`, '_blank');
         });
         
